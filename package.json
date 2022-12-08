@@ -16,9 +16,7 @@
   "author": "ChenQingze",
   "license": "MIT",
   "repository": "https://github.com/recative/capacitor-wechat-sdk",
-  "bugs": {
-    "url": "https://github.com/chenqingze/capacitor-wechat-sdk/issues"
-  },
+  "bugs": "https://github.com/chenqingze/capacitor-wechat-sdk/issues",
   "keywords": [
     "capacitor",
     "plugin",
