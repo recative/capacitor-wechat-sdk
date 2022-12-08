@@ -1,7 +1,7 @@
 {
-  "name": "@capacitor/wechat-sdk",
-  "version": "0.0.1",
-  "description": "wechat sdk wrapper with capacitor ,support ios and android",
+  "name": "@recative/capacitor-wechat-sdk",
+  "version": "0.0.2",
+  "description": "WeChat sdk wrapper with capacitor ,support ios and android",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -15,10 +15,7 @@
   ],
   "author": "ChenQingze",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/chenqingze/capacitor-wechat-sdk.git"
-  },
+  "repository": "https://github.com/recative/capacitor-wechat-sdk",
   "bugs": {
     "url": "https://github.com/chenqingze/capacitor-wechat-sdk/issues"
   },
@@ -74,5 +71,6 @@
     "android": {
       "src": "android"
     }
-  }
+  },
+  "packageManager": "yarn@3.3.0"
 }
