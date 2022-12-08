@@ -1,17 +1,17 @@
 {
   "name": "@recative/capacitor-wechat-sdk",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "WeChat sdk wrapper with capacitor ,support ios and android",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
   "unpkg": "dist/plugin.js",
   "files": [
-    "android/src/main/",
+    "android/src/main/**/*",
     "android/build.gradle",
-    "dist/",
-    "ios/Plugin/",
-    "CapacitorWechatSdk.podspec"
+    "dist/**/*",
+    "ios/Plugin/**/*",
+    "RecativeCapacitorWechatSdk.podspec"
   ],
   "author": "ChenQingze",
   "license": "MIT",
