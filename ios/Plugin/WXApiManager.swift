@@ -47,6 +47,7 @@ class WXApiManager:NSObject,WXApiDelegate{
             result["errCode"] = "0"
             if resp.isKind(of: SendAuthResp.self){
                 let  response = resp as! SendAuthResp
+                result["code"] = response.code;
                 result["state"] = response.state;
                 result["lang"] = response.lang;
                 result["country"] = response.country;
