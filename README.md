@@ -1,46 +1,44 @@
-# @capacitor/wechat-sdk
-## 关于参数及使用配置
-### 【参数配置】
-1、修改 capacitor.config.ts 或capacitor.config.json文件，增加微信相关配置参数
-```
+# @recative/capacitor-wechat-sdk
+
+To configure the `@recative/capacitor-wechat-sdk`, the capacitor.config.ts or capacitor.config.json file needs to be updated to include the following parameters:
+
+- `mchid`: The merchant id, which can be ignored if the WeChat payment function is not needed.
+- `wechatAppId`: The app ID obtained from the WeChat Open Platform official website.
+- `wechatUniversalLink`: The UniversalLink, which is only applicable to iOS.
+
+```TypeScript
 const config: CapacitorConfig = {
-  mchid: '123456', // 商户id，无需微信支付功能可忽略本参数
-  wechatAppId: 'wxd***c1fdsfsfs7f4f***', // 应用从微信开放平台官方网站申请到的合法appID
-  wechatUniversalLink: 'https://com.***.***/' // UniversalLink 仅针对于iOS
+  mchid: '123456',
+  wechatAppId: 'wxd***c1fdsfsfs7f4f***',
+  wechatUniversalLink: 'https://com.***.***/'
 };
 ```
 
-### 【iOS配置】
-1、[参考微信官方配置UniversalLink并配置URL scheme和LSApplicationQueriesSchemes](https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Access_Guide/iOS.html)  
-2、在你的工程文件中选择 Build Setting，在"Other Linker Flags"中加入"-ObjC -all_load"  
-3、修改app/appDelegate.swift，增加或修改下面回调处理：  
+To configure capacitor-wechat-sdk on iOS, follow these steps:
+
+Refer to the [WeChat official documentation]((https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Access_Guide/iOS.html)) on configuring the UniversalLink and URL scheme and LSApplicationQueriesSchemes.
+In your project file, select Build Setting and add `-ObjC -all_load` to `Other Linker Flags`.
+Modify app/appDelegate.swift and add or modify the following callback handling:
+ 
 ```
  func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {    
       return WechatSDKApplicationDelegate.sharedInstance.application(application,continue: userActivity, restorationHandler: restorationHandler)    
-       // return ApplicationDelegateProxy.shared.application(application, continue: userActivity, restorationHandler: restorationHandler)    
+      // return ApplicationDelegateProxy.shared.application(application, continue: userActivity, restorationHandler: restorationHandler)    
 }
 ```   
 
-### 【Android配置】  
-1、安卓还需要修改[capacitor-wechat-sdk](https://github.com/chenqingze/capacitor-wechat-sdk)/[android](https://github.com/chenqingze/capacitor-wechat-sdk/tree/main/android)/build.gradle文件,如下图红色标记所示：     
-  
-  
-<img width="674" alt="image" src="https://user-images.githubusercontent.com/8285776/153450222-5326f98c-d225-45f2-b609-dcfaeecacd50.png">  
-  
-2、Android 11 适配 [参考微信官方文档](https://open.weixin.qq.com/cgi-bin/announce?action=getannouncement&key=11600155960jI9EY&version=&lang=&token=)    
+To configure @recative/capacitor-wechat-sdk on Android, follow these steps:
 
-## 关于安装
-wechat sdk wrapper with capacitor ,support ios and android,本项目为自用项目并未发布到npm仓库，请clone到本地后，使用本地路径安装 : 
-```bash
-npm install /pathto/capacitor-wechat-sdk
-npx cap sync
+Android also requires modifying the build.gradle file under capacitor-wechat-sdk/android, as indicated by the red markings in the image below:
 
-```
-***下面的安装方式为capacitor自动生成，不可用。
+<img width="674" alt="image" src="https://user-images.githubusercontent.com/8285776/153450222-5326f98c-d225-45f2-b609-dcfaeecacd50.png">
+
+Android 11 compatibility: refer to the [WeChat official documentation](https://open.weixin.qq.com/cgi-bin/announce?action=getannouncement&key=11600155960jI9EY).
+
 ## Install
 
 ```bash
-npm install @capacitor/wechat-sdk 
+npm install @recative/capacitor-wechat-sdk 
 npx cap sync
 ```
 
@@ -70,11 +68,11 @@ npx cap sync
 echo(options: { value: string; }) => Promise<any>
 ```
 
-测试
+Tests the plugin.
 
-| Param         | Type                            |
-| ------------- | ------------------------------- |
-| **`options`** | <code>{ value: string; }</code> |
+| Param         | Type                            | Description                                    |
+| ------------- | ------------------------------- | ---------------------------------------------- |
+| **`options`** | <code>{ value: string; }</code> | value - a string value to test the plugin with |
 
 **Returns:** <code>Promise&lt;any&gt;</code>
 
@@ -87,11 +85,11 @@ echo(options: { value: string; }) => Promise<any>
 pay(options: { prepayId: string; packageValue: string; nonceStr: string; timeStamp: string; sign: string; }) => Promise<any>
 ```
 
-调起微信支付
+Initiates a WeChat payment.
 
-| Param         | Type                                                                                                        |
-| ------------- | ----------------------------------------------------------------------------------------------------------- |
-| **`options`** | <code>{ prepayId: string; packageValue: string; nonceStr: string; timeStamp: string; sign: string; }</code> |
+| Param         | Type                                                                                                        | Description                                                                                                                                                                                                                       |
+| ------------- | ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`options`** | <code>{ prepayId: string; packageValue: string; nonceStr: string; timeStamp: string; sign: string; }</code> | prepayId - the unique ID of the payment to initiate packageValue - the value of the package nonceStr - a nonce string used to prevent replay attacks timeStamp - the timestamp of the payment sign - the signature of the payment |
 
 **Returns:** <code>Promise&lt;any&gt;</code>
 
@@ -104,7 +102,7 @@ pay(options: { prepayId: string; packageValue: string; nonceStr: string; timeSta
 isInstalled() => Promise<any>
 ```
 
-判断是否安装微信
+Determines whether WeChat is installed on the device.
 
 **Returns:** <code>Promise&lt;any&gt;</code>
 
@@ -117,11 +115,11 @@ isInstalled() => Promise<any>
 shareText(options: { text: string; scene: string; }) => Promise<any>
 ```
 
-分享文本
+Shares text on WeChat.
 
-| Param         | Type                                          |
-| ------------- | --------------------------------------------- |
-| **`options`** | <code>{ text: string; scene: string; }</code> |
+| Param         | Type                                          | Description                                                                                                           |
+| ------------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| **`options`** | <code>{ text: string; scene: string; }</code> | text - the text to share scene - the scene to share the text to (0 for a session, 1 for a timeline, 2 for a favorite) |
 
 **Returns:** <code>Promise&lt;any&gt;</code>
 
@@ -134,11 +132,11 @@ shareText(options: { text: string; scene: string; }) => Promise<any>
 shareLink(options: { url: string; title: string; description: string; thumb?: string; scene: number; }) => Promise<any>
 ```
 
-分享链接
+Shares a link on WeChat.
 
-| Param         | Type                                                                                             | Description                                |
-| ------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------ |
-| **`options`** | <code>{ url: string; title: string; description: string; thumb?: string; scene: number; }</code> | thumb - 图片url地址 例如：http://xxx.com/test.png |
+| Param         | Type                                                                                             | Description                                                                                                                                                                                                                                                                                           |
+| ------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`options`** | <code>{ url: string; title: string; description: string; thumb?: string; scene: number; }</code> | url - the URL of the link to share title - the title of the link to share description - the description of the link to share thumb - the URL of the image to share, for example: http://xxx.com/test.png scene - the scene to share the link to (0 for a session, 1 for a timeline, 2 for a favorite) |
 
 **Returns:** <code>Promise&lt;any&gt;</code>
 
@@ -151,11 +149,11 @@ shareLink(options: { url: string; title: string; description: string; thumb?: st
 shareImage(options: { image: string; title: string; description: string; scene: number; }) => Promise<any>
 ```
 
-分享图片,可配合@capacitor/filesystem 使用
+Shares an image on WeChat. Can be used with @capacitor/filesystem.
 
-| Param         | Type                                                                               | Description                                                                                                         |
-| ------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| **`options`** | <code>{ image: string; title: string; description: string; scene: number; }</code> |  image - 本地图片的名称，如有特殊需求请自行修改获取图片的位置或方式 ios默认去documentDirectory下寻找 android默认去 /XXX/yourAppPackageName/cache目录下寻找图片文件 |
+| Param         | Type                                                                               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| ------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`options`** | <code>{ image: string; title: string; description: string; scene: number; }</code> | image - the name of the local image, if you have special needs, please modify the location or method to obtain the image iOS defaults to searching in the documentDirectory android defaults to searching in the /XXX/yourAppPackageName/cache directory for the image file title - the title of the image to share description - the description of the image to share scene - the scene to share the image to (0 for a session, 1 for a timeline, 2 for a favorite) |
 
 **Returns:** <code>Promise&lt;any&gt;</code>
 
@@ -168,11 +166,11 @@ shareImage(options: { image: string; title: string; description: string; scene: 
 shareMiniProgram(options: { webpageUrl: string; userName: string; path: string; hdImageData: string; withShareTicket: boolean; miniProgramType: number; title: string; description: string; scene: number; }) => Promise<any>
 ```
 
-分享微信小程序
+Shares a WeChat mini-program.
 
-| Param         | Type                                                                                                                                                                                            | Description                                       |
-| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| **`options`** | <code>{ webpageUrl: string; userName: string; path: string; hdImageData: string; withShareTicket: boolean; miniProgramType: number; title: string; description: string; scene: number; }</code> |  hdImageData - 图片url地址 例如：http://xxx.com/test.png |
+| Param         | Type                                                                                                                                                                                            | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`options`** | <code>{ webpageUrl: string; userName: string; path: string; hdImageData: string; withShareTicket: boolean; miniProgramType: number; title: string; description: string; scene: number; }</code> | webpageUrl - the URL of the webpage to share userName - the username of the WeChat mini-program to share path - the path to the page in the WeChat mini-program to share hdImageData - the URL of the image to share withShareTicket - a boolean value indicating whether to use the share ticket when sharing to a group miniProgramType - the type of WeChat mini-program to share (0 for release, 1 for test) title - the title of the WeChat mini-program to share description - the description of the WeChat mini-program to share scene - the scene to share the mini-program to (0 for a session, 1 for a timeline, 2 for a favorite) |
 
 **Returns:** <code>Promise&lt;any&gt;</code>
 
@@ -185,11 +183,11 @@ shareMiniProgram(options: { webpageUrl: string; userName: string; path: string; 
 launchMiniProgram(options: { userName: string; path: string; miniProgramType: number; }) => Promise<any>
 ```
 
-调起微信小程序
+Launches a WeChat mini-program.
 
-| Param         | Type                                                                      |
-| ------------- | ------------------------------------------------------------------------- |
-| **`options`** | <code>{ userName: string; path: string; miniProgramType: number; }</code> |
+| Param         | Type                                                                      | Description                                                                                                                                                                                                           |
+| ------------- | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`options`** | <code>{ userName: string; path: string; miniProgramType: number; }</code> | userName - the username of the WeChat mini-program to launch path - the path to the page in the WeChat mini-program to launch miniProgramType - the type of WeChat mini-program to launch (0 for release, 1 for test) |
 
 **Returns:** <code>Promise&lt;any&gt;</code>
 
@@ -202,11 +200,11 @@ launchMiniProgram(options: { userName: string; path: string; miniProgramType: nu
 sendAuthRequest(options: { scope: string; state: string; }) => Promise<any>
 ```
 
-微信登录
+Logs in to WeChat.
 
-| Param         | Type                                           |
-| ------------- | ---------------------------------------------- |
-| **`options`** | <code>{ scope: string; state: string; }</code> |
+| Param         | Type                                           | Description                                                                                                                                                                                                                                                                                                                                                                                    |
+| ------------- | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`options`** | <code>{ scope: string; state: string; }</code> | scope: the scope of the authentication request, which determines the permissions that the user will be asked to grant state: a string value used to maintain state between the request and the callback, which can be used for security purposes or for providing a return URL or other information that the authentication provider may need to provide a seamless authentication experience. |
 
 **Returns:** <code>Promise&lt;any&gt;</code>
 
@@ -219,11 +217,11 @@ sendAuthRequest(options: { scope: string; state: string; }) => Promise<any>
 wxOpenCustomerServiceChat(options: { corpId: string; url: string; }) => Promise<any>
 ```
 
-拉起微信客服
+Launches a WeChat customer service chat.
 
-| Param         | Type                                          | Description               |
-| ------------- | --------------------------------------------- | ------------------------- |
-| **`options`** | <code>{ corpId: string; url: string; }</code> | corpId - 企业ID url - 客服URL |
+| Param         | Type                                          | Description                                                      |
+| ------------- | --------------------------------------------- | ---------------------------------------------------------------- |
+| **`options`** | <code>{ corpId: string; url: string; }</code> | corpId - the ID of the enterprise url - the customer service URL |
 
 **Returns:** <code>Promise&lt;any&gt;</code>
 
